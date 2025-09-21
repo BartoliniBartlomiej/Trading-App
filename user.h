@@ -27,6 +27,8 @@ public:
     void deposit(double amount);
     double getBalance() { return balance; }
 
+
+    std::string getID() { return ID;    }
 };
 
 

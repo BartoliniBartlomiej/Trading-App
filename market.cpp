@@ -99,6 +99,7 @@ void Market::displayMarket() {
 //         std::cout << "Transaction cancelled." << std::endl;
 //     }
 // }
+
 void Market::makeTrade(User* user) {
     if (!user) {
         std::cout << "No active user selected!" << std::endl;
@@ -168,18 +169,17 @@ void Market::makeTrade(User* user) {
 
     if (confir == "YES" || confir == "yes") {
         // TWORZENIE shared_ptr ZAMIAST surowego wskaźnika
-        boost::shared_ptr<Transaction> newTransaction(
-    new Transaction("T" + std::to_string(transactions.size() + 1),
+        boost::shared_ptr<Transaction> newTransaction(new Transaction("T" + std::to_string(transactions.size() + 1),
                     operationType,
                     value,
-                    user)
-);
-
+                    user));
         user->addTransaction(newTransaction);
-
+        addNewTransaction(newTransaction); //?
         std::cout << "Transaction completed! You " << operationType << " $" << value
                   << " of " << active->getName() << " stock." << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Transaction cancelled." << std::endl;
     }
 }
@@ -191,3 +191,19 @@ double Market::calculate2Cash(Item * _chosenItem, double _amount) {
 double Market::calculate2Symbol(Item * _chosenItem, double _value) {
     return _value / _chosenItem->getPrice();
 }
+void Market::displayTransactions() {
+    std::cout << "\n=== MARKET TRANSACTION HISTORY ===" << std::endl;
+    if (transactions.empty()) {
+        std::cout << "No transactions yet." << std::endl;
+        return;
+    }
+
+    for (const auto& transaction : transactions) {
+        std::cout << "Transaction ID: " << transaction->getId()
+                  << " | Type: " << transaction->getType()
+                  << " | Value: $" << transaction->getValue()
+                  << " | User: " << transaction->getUser()->getID() // potrzebujesz gettera do ID usera
+                  << std::endl;
+    }
+}
+

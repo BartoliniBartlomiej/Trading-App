@@ -139,7 +139,7 @@ project(TradingPlatform)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(trading_app
+add_executable(app
     main.cpp
     market.cpp
     user.cpp

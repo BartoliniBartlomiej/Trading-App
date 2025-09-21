@@ -43,6 +43,10 @@ public:
     void collectMoney();
     void withdrawMoney();
     std::string getItemName() const { return itemName; }
+    std::string getId() const { return transactionId; }
+    std::string getType() const { return type; }
+    double getValue() const { return value; }
+    User* getUser() const { return transactionUser; }
 };
 
 

@@ -2,10 +2,8 @@
 #include "market.h"
 
 int main() {
-
     User u1("bartek1001");
     u1.addMoney(10000);
-    u1.display();
 
     Market market;
 
@@ -16,6 +14,7 @@ int main() {
         std::cout << "2. Display market" << std::endl;
         std::cout << "3. Make trade" << std::endl;
         std::cout << "4. Add money" << std::endl;
+        std::cout << "5. Display market transactions" << std::endl; // ← NOWA OPCJA
         std::cout << "0. Exit" << std::endl;
         std::cout << "Choose option: ";
         std::cin >> choice;
@@ -36,6 +35,9 @@ int main() {
                 std::cin >> amount;
                 u1.addMoney(amount);
                 std::cout << "Added $" << amount << " to account." << std::endl;
+                break;
+            case 5: // ← NOWA OPCJA
+                market.displayTransactions();
                 break;
             case 0:
                 std::cout << "Goodbye!" << std::endl;
