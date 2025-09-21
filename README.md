@@ -129,7 +129,7 @@ trading-platform/
 ├── item.h/cpp        # Stock item representation
 ├── transaction.h/cpp # Transaction handling
 └── README.md         # Project documentation
-```
+
 
 ### Building with CMake
 

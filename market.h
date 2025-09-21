@@ -4,14 +4,17 @@
 
 #ifndef TRADINGPLATFORM_MARKET_H
 #define TRADINGPLATFORM_MARKET_H
-#include <ctime>
+#include <cstdlib>
 #include <vector>
 #include "user.h"
+#include "transaction.h"
 #include "item.h"
-#include </opt/homebrew/Cellar/boost/1.89.0/include/boost/smart_ptr.hpp>
+#include <boost/smart_ptr.hpp> //in case of ERRORS change that to your boost directory
+
 
 class Market {
 private:
+
     //time_t time;
     std::vector <User> users;
     //std::vector <Transaction> transactions;
@@ -34,7 +37,14 @@ public:
         addIndex(NVDA);
         addIndex(SPX);
     }
+    void update() {
+        priceManipulation();
+        calculatePercent();
 
+        for (auto t : transactions) {
+            t->newValue();
+        }
+    }
     void setActiveUser(User* user) { activeUser = user; }
     User* getActiveUser() { return activeUser; }
 
@@ -48,6 +58,9 @@ public:
     double calculate2Symbol(Item * _chosenItem, double _value);
     void makeTrade(User* user);
     void displayTransactions();
+
+    void priceManipulation();
+    void calculatePercent();
 
 };
 

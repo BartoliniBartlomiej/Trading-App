@@ -9,7 +9,7 @@
 #include <iostream>
 #include <vector>
 #include "transaction.h"
-#include </opt/homebrew/Cellar/boost/1.89.0/include/boost/smart_ptr.hpp> //change that to your boost directory
+#include <boost/smart_ptr.hpp> //in case of ERRORS change that to your boost directory
 
 class User {
 private:
