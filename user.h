@@ -9,19 +9,21 @@
 #include <iostream>
 #include <vector>
 #include "transaction.h"
+#include </opt/homebrew/Cellar/boost/1.89.0/include/boost/smart_ptr.hpp>
 
 class User {
 private:
     std::string ID;
     double balance;
-    std::vector<Transaction*> transactions; //list of pointers to transaction
+    //std::vector<Transaction*> transactions; //list of pointers to transaction
+    std::vector<boost::shared_ptr<Transaction>> transactions; //list of pointers to transaction
 
 public:
     User(std::string id) : ID(id), balance(0) {}
     void addMoney(double amount);
     void display();
     void buy();
-    void addTransaction(Transaction* t);
+    void addTransaction(boost::shared_ptr<Transaction> t);
     void deposit(double amount);
     double getBalance() { return balance; }
 

@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include </opt/homebrew/Cellar/boost/1.89.0/include/boost/smart_ptr.hpp>
 
 class User;
 
@@ -30,6 +31,14 @@ public:
         else if(type == "sell")
             withdrawMoney();
     }
+    // Transaction(std::string _transactionId, std::string _type, double _value, User* _transactionUser)
+    //     : transactionId(_transactionId), type(_type), value(_value),
+    //       transactionUser(_transactionUser) {
+    //     if(type == "buy")
+    //         collectMoney();
+    //     else if(type == "sell")
+    //         withdrawMoney();
+    // }
     void displayTransaction();
     void collectMoney();
     void withdrawMoney();

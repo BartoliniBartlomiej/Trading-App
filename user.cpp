@@ -22,6 +22,6 @@ void User::display() {
     }
 }
 
-void User::addTransaction(Transaction* t) {
+void User::addTransaction(boost::shared_ptr<Transaction> t) {
     transactions.push_back(t);
 }
