@@ -44,6 +44,7 @@ public:
         for (auto t : transactions) {
             t->newValue();
         }
+        updateUsers();
     }
     void setActiveUser(User* user) { activeUser = user; }
     User* getActiveUser() { return activeUser; }
@@ -61,6 +62,7 @@ public:
 
     void priceManipulation();
     void calculatePercent();
+    void updateUsers();
 
 };
 

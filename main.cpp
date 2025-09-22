@@ -9,6 +9,7 @@ int main() {
     u1.addMoney(10000);
 
     Market market;
+    market.addUser(u1);
 
     system("clear");
 
@@ -17,6 +18,7 @@ int main() {
 
         market.update(); //simulating real market price manipulation
         std::cout << "\n=== Trading Platform ===" << std::endl;
+        std::cout << u1.getPotentialBalance() << std::endl;
         std::cout << "1. Display user info" << std::endl;
         std::cout << "2. Display market" << std::endl;
         std::cout << "3. Make trade" << std::endl;

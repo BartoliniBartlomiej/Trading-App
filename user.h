@@ -15,20 +15,24 @@ class User {
 private:
     std::string ID;
     double balance;
+    double potentialBalance;
     //std::vector<Transaction*> transactions; //list of pointers to transaction
-    std::vector<boost::shared_ptr<Transaction>> transactions; //list of pointers to transaction
+    std::vector<boost::shared_ptr<Transaction>> userTransactions; //list of pointers to transaction
 
 public:
-    User(std::string id) : ID(id), balance(0) {}
+    User(std::string id) : ID(id), balance(0), potentialBalance(0) {}
     void addMoney(double amount);
     void display();
     void buy();
     void addTransaction(boost::shared_ptr<Transaction> t);
     void deposit(double amount);
+
     double getBalance() { return balance; }
-
-
+    double getPotentialBalance() { return potentialBalance; }
     std::string getID() { return ID;    }
+
+    void updatePotentialBalance();
+    double calculateProfits();
 };
 
 

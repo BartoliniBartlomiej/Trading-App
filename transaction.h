@@ -24,19 +24,23 @@ private:
     double change;
     User* transactionUser; // pointer to transaction user
     Item* item;
-    double startingPrice;
+    double startingValue;
+    bool closed;
 
 public:
 
     Transaction(std::string _transactionId, std::string _type, double _value, User *_transactionUser,
                 Item* _item)
-        : transactionId(_transactionId), type(_type), value(_value), startingPrice(_value),
-          transactionUser(_transactionUser), itemName(_item->getName()), change(0), item(_item)
+        : transactionId(_transactionId), type(_type), value(_value), startingValue(_value),
+          transactionUser(_transactionUser), itemName(_item->getName()), change(0), item(_item), closed(false)
     {
         if(type == "buy")
             collectMoney();
-        else if(type == "sell")
+        else if(type == "sell") {
             withdrawMoney();
+            //closed = 1;
+        }
+
     }
 
 
@@ -51,6 +55,7 @@ public:
     void setValue(double _value) { value = _value; }
     void setLastValue(double _value) { lastValue = _value; }
     void setChangeT(double change) { change = change; }
+    void setClose() { closed = true; }
 
     void displayTransaction();
     void collectMoney();
@@ -65,7 +70,9 @@ public:
     void newValue();
     double getLastValue() {   return lastValue; };
     double getChangeT();
-    double getStartingValue() { return startingPrice; }
+    double getStartingValue() { return startingValue; }
+    bool getIsClosed() { return closed; }
+    double calculateProfit();
 };
 
 

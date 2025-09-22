@@ -15,13 +15,13 @@ void Market::displayMarket() {
     int j = 1;
     for (auto i : indexes) {
         if (i.getChange()>0) {
-            std::cout <<j << ". " <<  i.getName() <<" $" << i.getPrice() << " | "<< "\033[32m" << "+"<< i.getChange() << "%" << "\033[0m" << std::endl;
+            std::cout <<j << ". " << std::setw(4) << i.getName() <<" $" << std::setw(9)<<i.getPrice() << " |"<< std::setw(6)<<"\033[32m" << "+"<< i.getChange() << "%" << "\033[0m" << std::endl;
             j++;
         } else if (i.getChange()<0) {
-            std::cout <<j << ". " <<  i.getName() <<" $" << i.getPrice() << " | " << "\033[31m" << i.getChange() << "%" << "\033[0m" << std::endl;
+            std::cout <<j << ". " << std::setw(4) << i.getName() <<" $" <<std::setw(9)<< i.getPrice() << " |" << std::setw(6)<<"\033[31m" << i.getChange() << "%" << "\033[0m" << std::endl;
             j++;
         } else {
-            std::cout <<j << ". " <<  i.getName() <<" $" << i.getPrice() << " | "<< i.getChange() << "%" << std::endl;
+            std::cout <<j << ". " << std::setw(4)<<i.getName() <<" $" << std::setw(9)<<i.getPrice() << " |"<< i.getChange() << std::setw(6)<<"%" << std::endl;
             j++;
         }
 
@@ -167,6 +167,12 @@ void Market::calculatePercent() {
     for (auto& i : indexes) {
         double _change = 100 *((i.getPrice()/i.getLastPrice())-1);
         i.setChange(_change);
+    }
+}
+void Market::updateUsers() {
+
+    for (auto& u : users) {
+        u.updatePotentialBalance();
     }
 }
 

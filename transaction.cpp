@@ -9,9 +9,14 @@
 void Transaction::displayTransaction()
 {
     if (type == "buy") {
-        std::cout << transactionId << " [-$" << value << "]" << std::endl;
+        if (change > 0) {
+            std::cout << transactionId << " | -$" << startingValue << "\033[32m" << " [" << value << "]"<< " +" << change<< "%" << "\033[0m"<< std::endl;
+        }else {
+            std::cout << transactionId << " | -$" << startingValue << "\033[31m" <<  " [" << value << "]"<< " " << change << "%" << "\033[0m"<< std::endl;
+        }
+
     } else {
-        std::cout << transactionId << " [+$" << value << "]" << std::endl;
+        std::cout << transactionId << " [+$" << startingValue << "]" << std::endl;
     }
 }
 
@@ -39,3 +44,6 @@ double Transaction::getChangeT() {
     return change;
 }
 
+double Transaction::calculateProfit() {
+    return value - startingValue;
+}
