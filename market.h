@@ -64,6 +64,9 @@ public:
     void calculatePercent();
     void updateUsers();
 
+    void tradeLong(User* user, Item* item);
+    //void tradeShort();
+
 };
 
 

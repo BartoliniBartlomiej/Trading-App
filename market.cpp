@@ -33,7 +33,6 @@ void Market::makeTrade(User* user) {
         std::cout << "No active user selected!" << std::endl;
         return;
     }
-
     Item* active = nullptr;
     int j = 1;
 
@@ -64,53 +63,57 @@ void Market::makeTrade(User* user) {
 
     std::string operationType = (choice == 1) ? "buy" : "sell";
 
-    std::cout << "\n1. Enter the amount of shares\n2. Enter the price in dollars\n";
-    std::cin >> choice;
-
-    double value; // in $
-    double amount; // amount of shares
-
     if (choice == 1) {
-        std::cout << "How many shares: ";
-        std::cin >> amount;
-        value = calculate2Cash(active, amount);
-    } else if (choice == 2) {
-        std::cout << "How much ($): ";
-        std::cin >> value;
-        amount = calculate2Symbol(active, value);
-    } else {
-        std::cout << "Invalid choice!" << std::endl;
-        return;
+        tradeLong(user, active);
     }
 
-    // Sprawdzenie czy użytkownik ma wystarczające środki
-    if (operationType == "buy" && user->getBalance() < value) {
-        std::cout << "Insufficient funds! Available: $" << user->getBalance()
-                  << ", Required: $" << value << std::endl;
-        return;
-    }
-
-    std::string confir;
-    std::cout << "\nType YES to " << operationType << " " << amount
-              << " shares of " << active->getName() << " for $" << value << std::endl;
-    std::cin >> confir;
-
-    if (confir == "YES" || confir == "yes") {
-        // TWORZENIE shared_ptr ZAMIAST surowego wskaźnika
-        boost::shared_ptr<Transaction> newTransaction(new Transaction("T" + std::to_string(transactions.size() + 1),
-                    operationType,
-                    value,
-                    user,
-                    active));
-        user->addTransaction(newTransaction);
-        addNewTransaction(newTransaction); //?
-        std::cout << "Transaction completed! You " << operationType << " $" << value
-                  << " of " << active->getName() << " stock." << std::endl;
-    }
-    else
-    {
-        std::cout << "Transaction cancelled." << std::endl;
-    }
+    // std::cout << "\n1. Enter the amount of shares\n2. Enter the price in dollars\n";
+    // std::cin >> choice;
+    //
+    // double value; // in $
+    // double amount; // amount of shares
+    //
+    // if (choice == 1) {
+    //     std::cout << "How many shares: ";
+    //     std::cin >> amount;
+    //     value = calculate2Cash(active, amount);
+    // } else if (choice == 2) {
+    //     std::cout << "How much ($): ";
+    //     std::cin >> value;
+    //     amount = calculate2Symbol(active, value);
+    // } else {
+    //     std::cout << "Invalid choice!" << std::endl;
+    //     return;
+    // }
+    //
+    // // Sprawdzenie czy użytkownik ma wystarczające środki
+    // if (operationType == "buy" && user->getBalance() < value) {
+    //     std::cout << "Insufficient funds! Available: $" << user->getBalance()
+    //               << ", Required: $" << value << std::endl;
+    //     return;
+    // }
+    //
+    // std::string confir;
+    // std::cout << "\nType YES to " << operationType << " " << amount
+    //           << " shares of " << active->getName() << " for $" << value << std::endl;
+    // std::cin >> confir;
+    //
+    // if (confir == "YES" || confir == "yes") {
+    //     // TWORZENIE shared_ptr ZAMIAST surowego wskaźnika
+    //     boost::shared_ptr<Transaction> newTransaction(new Transaction("T" + std::to_string(transactions.size() + 1),
+    //                 operationType,
+    //                 value,
+    //                 user,
+    //                 active));
+    //     user->addTransaction(newTransaction);
+    //     addNewTransaction(newTransaction); //?
+    //     std::cout << "Transaction completed! You " << operationType << " $" << value
+    //               << " of " << active->getName() << " stock." << std::endl;
+    // }
+    // else
+    // {
+    //     std::cout << "Transaction cancelled." << std::endl;
+    // }
 }
 
 double Market::calculate2Cash(Item * _chosenItem, double _amount) {
@@ -173,6 +176,62 @@ void Market::updateUsers() {
 
     for (auto& u : users) {
         u.updatePotentialBalance();
+    }
+}
+
+void Market::tradeLong(User *user, Item *item) {
+    // if (user == nullptr) {
+    //     std::cout << "Invalid user or asset!" << std::endl;
+    //     return;
+    // }
+
+    int choice;
+    std::cout << "\n1. Enter the amount of shares\n2. Enter the price in dollars\n";
+    std::cin >> choice;
+
+    double value; // in $
+    double amount; // amount of shares
+
+    if (choice == 1) {
+        std::cout << "How many shares: ";
+        std::cin >> amount;
+        value = calculate2Cash(item, amount);
+    } else if (choice == 2) {
+        std::cout << "How much ($): ";
+        std::cin >> value;
+        amount = calculate2Symbol(item, value);
+    } else {
+        std::cout << "Invalid choice!" << std::endl;
+        return;
+    }
+
+    // Sprawdzenie czy użytkownik ma wystarczające środki
+    if (user->getBalance() < value) {
+        std::cout << "Insufficient funds! Available: $" << user->getBalance()
+                  << ", Required: $" << value << std::endl;
+        return;
+    }
+
+    std::string confir = "YES";
+    // std::cout << "\nType YES to " << operationType << " " << amount
+    //           << " shares of " << active->getName() << " for $" << value << std::endl;
+    // std::cin >> confir;
+
+    if (confir == "YES" || confir == "yes") {
+        // TWORZENIE shared_ptr ZAMIAST surowego wskaźnika
+        boost::shared_ptr<Transaction> newTransaction(new Transaction("T" + std::to_string(transactions.size() + 1),
+                    "buy",
+                    value,
+                    user,
+                    item));
+        user->addTransaction(newTransaction);
+        addNewTransaction(newTransaction); //?
+        std::cout << "Transaction completed! You buy $" << value
+                  << " of " << item->getName() << " stock." << std::endl;
+    }
+    else
+    {
+        std::cout << "Transaction cancelled." << std::endl;
     }
 }
 
